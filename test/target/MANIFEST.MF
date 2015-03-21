@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: test.helloworld
+Implementation-Version: 0.0.1-SNAPSHOT
+Implementation-Vendor-Id: com.pearlhacks
+Build-Jdk: 1.7.0_51
+Built-By: mrunalnargunde
+Created-By: IntelliJ IDEA
+Main-Class: com.pearlhacks.test.Application
+
