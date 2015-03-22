@@ -6,7 +6,7 @@
 
 <html>
 <head>
-    <title>Hello Twitter</title>
+    <title>Wellness tweet pool</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
 

@@ -6,7 +6,7 @@
 
 <html>
 <head>
-    <title>Hello Twitter</title>
+    <title>Wellness tweet pool</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
 
@@ -33,8 +33,6 @@
  <%=generalTweets.get(i).getText()%>
 </span>
 <% } %>
-
-
 
 <script type="text/css" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
