@@ -1,5 +1,6 @@
 package com.springapp.mvc;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,43 +27,62 @@ public class HelloTwitterController {
     final String appSecret = "sxdp8Vw9A220LDmZE8Y3ZLexTt641qRqqWxrnP7wUo5jhY0I2f";
     String appToken = new String();
     List<String> hashTag= new ArrayList<String>(8);
-    final String WOMEN = "women";
-    final String HORMONES = "hormones";
+    public final String WOMEN      = "women";
+    public final String HORMONES   = "hormones";
+    public final String MATERNITY  = "maternity";
+    public final String PREGNANCY  = "pregnancy";
+    public final String MENOPAUSE  = "Menopause";
+    public final String FASHION    = "fashion";
+    public final String YOGA       = "yoga";
+    public final String ABS        = "abs";
+    public final String CARDIO     = "cardio";
+    public List<Tweet> generalTweets = new ArrayList<Tweet>(100);
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD})
-    public ModelAndView printWelcome() {
-        //model.addAttribute("message", "Hello world!");
-        //return "hello";
-        hashTag.add("#women"); // general
-        hashTag.add("#women #hormones");
-        hashTag.add("#women #pregnancy #maternity");
-        hashTag.add("#women #menopause");
+    //@Scheduled(fixedRate = 5000)
+    public ModelAndView  GetTweets() {
 
-        hashTag.add("#women #fashion");
-
-        hashTag.add("#women #yoga");
-        hashTag.add("#women #abs");
-        hashTag.add("#women #cardio");
-
+        initHashTags();
         appToken = fetchApplicationAccessToken(appId, appSecret);
-        List<Tweet> generalTweets = new ArrayList<Tweet>();
-       // for (int i = 0 ; i < hashTag.size(); i++){
-            generalTweets = searchTwitter(hashTag.get(0), appToken);
-            printTweets(generalTweets,hashTag.get(0));
+        generalTweets = searchTwitter(hashTag.get(0), appToken);
+        //printTweets(generalTweets,hashTag.get(0));
 
-        //}
         ModelAndView mav = new ModelAndView();
-        mav.addObject("tweet",generalTweets);
-        //generalTweets.clear();
+        mav.addObject(WOMEN,generalTweets);
         return mav;
-        //model.addAttribute("tweet", tweets.get(0).getText());
-        //return tweets.get(0).getText(        model.addAttribute(WOMEN, generalTweets);
+    }
 
+    @RequestMapping("/hormones")
+    public ModelAndView getFilteredTweets(){
+        List<Tweet> hormonalTweets = new ArrayList<Tweet>(100);
+        hormonalTweets = searchTwitter(hashTag.get(1), appToken);
+
+        //printTweets(hormonalTweets);
+        ModelAndView mav = new ModelAndView();
+        mav.addObject(HORMONES,hormonalTweets);
+        return mav;
+    }
+
+
+
+
+    private void initHashTags() {
+        hashTag.add("#"+ WOMEN); // general
+
+        hashTag.add("#" + WOMEN + "#" + HORMONES);
+        hashTag.add("#" + WOMEN + "#" + PREGNANCY);
+        hashTag.add("#" + WOMEN + "#" + MENOPAUSE);
+
+        hashTag.add("#" + WOMEN + "#" + FASHION);
+
+        hashTag.add("#" + WOMEN + "#" + YOGA);
+        hashTag.add("#" + WOMEN + "#" + ABS);
+        hashTag.add("#" + WOMEN + "#" + CARDIO);
     }
 
 
     private void printTweets(List<Tweet> generalTweets, String currenthashT) {
-        System.out.println("\n\n============================="+currenthashT + " count = " + generalTweets.size() +"================================\n\n");
+        System.out.println("\n\n============================="+ currenthashT + " count = " + generalTweets.size() +"================================\n\n");
         for (Tweet tweet : generalTweets) {
             System.out.println(tweet.getText());
         }
@@ -74,7 +94,10 @@ public class HelloTwitterController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + appToken);
         HttpEntity<String> requestEntity = new HttpEntity<String>("", headers);
+
         Map<String, ?> result = rest.exchange("https://api.twitter.com/1.1/search/tweets.json?q={query}", HttpMethod.GET, requestEntity, Map.class, query).getBody();
+
+
         List<Map<String, ?>> statuses = (List<Map<String, ?>>) result.get("statuses");
         List<Tweet> tweets = new ArrayList<Tweet>();
         for (Map<String, ?> status : statuses) {
