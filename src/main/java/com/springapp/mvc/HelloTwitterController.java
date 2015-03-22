@@ -13,23 +13,26 @@ import javax.swing.JOptionPane;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Template;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/")
 public class HelloTwitterController {
-    final String appId = "FIXME";
-    final String appSecret = "FIXME";
+    final String appId = "akXupoEf39G3plfNdFQ0RohpO";
+    final String appSecret = "sxdp8Vw9A220LDmZE8Y3ZLexTt641qRqqWxrnP7wUo5jhY0I2f";
     String appToken = new String();
-    List<String> hashTag= new ArrayList<String>(20);
+    List<String> hashTag= new ArrayList<String>(8);
+    final String WOMEN = "women";
+    final String HORMONES = "hormones";
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD})
-    public void printWelcome(ModelMap model) {
+    public ModelAndView printWelcome() {
         //model.addAttribute("message", "Hello world!");
         //return "hello";
-
         hashTag.add("#women"); // general
         hashTag.add("#women #hormones");
         hashTag.add("#women #pregnancy #maternity");
@@ -42,18 +45,24 @@ public class HelloTwitterController {
         hashTag.add("#women #cardio");
 
         appToken = fetchApplicationAccessToken(appId, appSecret);
-        for (String hashT : hashTag){
-            List<Tweet> generalTweets = searchTwitter(hashT, appToken);
-            printTweets(generalTweets,hashT);
-        }
+        List<Tweet> generalTweets = new ArrayList<Tweet>();
+       // for (int i = 0 ; i < hashTag.size(); i++){
+            generalTweets = searchTwitter(hashTag.get(0), appToken);
+            printTweets(generalTweets,hashTag.get(0));
 
+        //}
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("tweet",generalTweets);
+        //generalTweets.clear();
+        return mav;
         //model.addAttribute("tweet", tweets.get(0).getText());
-        //return tweets.get(0).getText();
+        //return tweets.get(0).getText(        model.addAttribute(WOMEN, generalTweets);
+
     }
 
 
     private void printTweets(List<Tweet> generalTweets, String currenthashT) {
-        System.out.println("\n\n============================="+currenthashT +"================================\n\n");
+        System.out.println("\n\n============================="+currenthashT + " count = " + generalTweets.size() +"================================\n\n");
         for (Tweet tweet : generalTweets) {
             System.out.println(tweet.getText());
         }
@@ -81,24 +90,5 @@ public class HelloTwitterController {
 
     private static String promptForInput(String promptText) {
         return JOptionPane.showInputDialog(promptText + " ");
-    }
-
-    private static final class Tweet {
-        private long id;
-
-        private String text;
-
-        public Tweet(long id, String text) {
-            this.id = id;
-            this.text = text;
-        }
-
-        public long getId() {
-            return id;
-        }
-
-        public String getText() {
-            return text;
-        }
     }
 }
