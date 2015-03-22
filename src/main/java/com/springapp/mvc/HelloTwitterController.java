@@ -39,7 +39,7 @@ public class HelloTwitterController {
     public List<Tweet> generalTweets = new ArrayList<Tweet>(100);
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.HEAD})
-    //@Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 5000 * 60 * 3)
     public ModelAndView  GetTweets() {
 
         initHashTags();
@@ -53,6 +53,7 @@ public class HelloTwitterController {
     }
 
     @RequestMapping("/hormones")
+    @Scheduled(fixedRate = 5000 * 60 * 3)
     public ModelAndView getFilteredTweets(){
         List<Tweet> hormonalTweets = new ArrayList<Tweet>(100);
         hormonalTweets = searchTwitter(hashTag.get(1), appToken);
@@ -63,18 +64,39 @@ public class HelloTwitterController {
     }
 
 
+    @RequestMapping("/fashion")
+    @Scheduled(fixedRate = 5000 * 60 * 3)
+    public ModelAndView getFilteredFashionTweets(){
+        List<Tweet> fashionTweets = new ArrayList<Tweet>(100);
+        fashionTweets = searchTwitter(hashTag.get(4), appToken);
+        //printTweets(hormonalTweets);
+        ModelAndView mav = new ModelAndView();
+        mav.addObject(FASHION,fashionTweets);
+        return mav;
+    }
 
+
+    @RequestMapping("/yoga")
+    @Scheduled(fixedRate = 5000 * 60 * 3)
+    public ModelAndView getFilteredYogaTweets(){
+        List<Tweet> yogaTweets = new ArrayList<Tweet>(100);
+        yogaTweets = searchTwitter(hashTag.get(5), appToken);
+        //printTweets(hormonalTweets);
+        ModelAndView mav = new ModelAndView();
+        mav.addObject(YOGA,yogaTweets);
+        return mav;
+    }
 
     private void initHashTags() {
-        hashTag.add("#"+ WOMEN); // general
+        hashTag.add("#"+ WOMEN); // general 0
 
-        hashTag.add("#" + WOMEN + "#" + HORMONES);
-        hashTag.add("#" + WOMEN + "#" + PREGNANCY);
-        hashTag.add("#" + WOMEN + "#" + MENOPAUSE);
+        hashTag.add("#" + WOMEN + "#" + HORMONES); // 1
+        hashTag.add("#" + WOMEN + "#" + PREGNANCY); //2
+        hashTag.add("#" + WOMEN + "#" + MENOPAUSE);  //3
 
-        hashTag.add("#" + WOMEN + "#" + FASHION);
+        hashTag.add("#" + WOMEN + "#" + FASHION);   //4
 
-        hashTag.add("#" + WOMEN + "#" + YOGA);
+        hashTag.add("#" + WOMEN + "#" + YOGA);  //5
         hashTag.add("#" + WOMEN + "#" + ABS);
         hashTag.add("#" + WOMEN + "#" + CARDIO);
     }

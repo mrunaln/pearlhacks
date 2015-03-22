@@ -10,28 +10,26 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <link rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css'>
 
-
     <style type="text/css">
-        body { background: #c73124; }
+        body { background: #913a5a; }
     </style>
-
 </head>
 <body>
 
-<h3> #Women #HORMONES Tweets</h3>
+<h3> #Women #YOGA Tweets</h3>
+
 <br><br>
 <button type="button" class="btn btn-primary">Fashion tweets</button>
 
-<button type="button" class="btn btn-primary"> General Women tweets</button>
+<button type="button" class="btn btn-primary">Hormonal tweets</button>
 
-<button type="button" class="btn btn-primary">Yoga Tweets</button>
-
+<button type="button" class="btn btn-primary">General Women Tweets</button>
 <br><br>
 <%
-    List<Tweet> hormonesTweets =(ArrayList) request.getAttribute("hormones");
-    for (int i = 0 ; i < hormonesTweets.size(); i++){
+    List<Tweet> yogaTweets =(ArrayList) request.getAttribute("yoga");
+    for (int i = 0 ; i < yogaTweets.size(); i++){
 %>
-<%=hormonesTweets.get(i).getText()%>
+<%=yogaTweets.get(i).getText()%>
 <br><br>
 <% } %>
 <script type="text/css" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"></script>

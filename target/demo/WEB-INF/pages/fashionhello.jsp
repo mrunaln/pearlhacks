@@ -12,26 +12,25 @@
 
 
     <style type="text/css">
-        body { background: #c73124; }
+        body { background: #e06666; }
     </style>
-
 </head>
 <body>
 
-<h3> #Women #HORMONES Tweets</h3>
-<br><br>
-<button type="button" class="btn btn-primary">Fashion tweets</button>
+<h3> #Women #FASHION Tweets</h3>
 
-<button type="button" class="btn btn-primary"> General Women tweets</button>
+<br><br>
+<button type="button" class="btn btn-primary">General Women tweets</button>
+
+<button type="button" class="btn btn-primary">Hormonal tweets</button>
 
 <button type="button" class="btn btn-primary">Yoga Tweets</button>
-
 <br><br>
 <%
-    List<Tweet> hormonesTweets =(ArrayList) request.getAttribute("hormones");
-    for (int i = 0 ; i < hormonesTweets.size(); i++){
+    List<Tweet> fashionTweets =(ArrayList) request.getAttribute("fashion");
+    for (int i = 0 ; i < fashionTweets.size(); i++){
 %>
-<%=hormonesTweets.get(i).getText()%>
+<%=fashionTweets.get(i).getText()%>
 <br><br>
 <% } %>
 <script type="text/css" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"></script>
