@@ -56,7 +56,6 @@ public class HelloTwitterController {
     public ModelAndView getFilteredTweets(){
         List<Tweet> hormonalTweets = new ArrayList<Tweet>(100);
         hormonalTweets = searchTwitter(hashTag.get(1), appToken);
-
         //printTweets(hormonalTweets);
         ModelAndView mav = new ModelAndView();
         mav.addObject(HORMONES,hormonalTweets);
